@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -37,7 +38,7 @@ public class Solution {
 			
 			sb.append("#").append(i).append(" ").append(result).append("\n");
 		}
-        System.out.println(sb);
+		System.out.println(sb);
 	}
 	
 	public static void subSet(int cnt, int sum) {
