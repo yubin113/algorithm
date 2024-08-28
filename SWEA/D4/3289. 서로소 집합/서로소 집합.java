@@ -9,18 +9,12 @@ public class Solution {
 	static int[] unf;
 	public static int Find(int v) {
 		if(v == unf[v]) return v;
-		return unf[v] = Find(unf[v]);
+		else return unf[v] = Find(unf[v]);
 	}
 	public static void union(int a, int b) {
 		int fa = Find(a);
 		int fb = Find(b);
-		if(fa != fb) {
-			if( fa < fb ) {
-				unf[fb] = fa;
-			}else {
-				unf[fa] = fb;
-			}
-		}
+		if(fa != fb) unf[fa] = fb;
 	}
 	
 	static BufferedReader br;
@@ -35,7 +29,6 @@ public class Solution {
 		br = new BufferedReader(new InputStreamReader(System.in));
 		sb = new StringBuilder();
 		
-		
 		TC = Integer.parseInt(br.readLine());
 		
 		for (int tc = 1; tc <= TC; tc++) {
@@ -43,7 +36,7 @@ public class Solution {
 			st = new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			unf = new int[N+1];
-			for (int i = 1; i <= N; i++) {
+			for (int i = 1; i < N + 1; i++) {
 				unf[i] = i;
 			}
 			M = Integer.parseInt(st.nextToken());
@@ -64,9 +57,6 @@ public class Solution {
 			}
 			sb.append("\n");
 		}
-		
 		System.out.println(sb);
-		
-
 	}
 }
