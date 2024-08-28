@@ -2,14 +2,16 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Solution {
-	/*
-	 * 인접리스트 사용
-	 */
+/*
+ * 인접행렬 사용
+ * 
+ */
 	
 	static BufferedReader br;
 	static StringBuilder sb;
@@ -17,8 +19,7 @@ public class Solution {
 	
 	static int N;
 	static int start;
-	
-	static LinkedList<Integer>[] list;
+	static int[][] graph;
 	
 	static int answer;
 	static boolean[] visited;
@@ -33,17 +34,14 @@ public class Solution {
 			N = Integer.parseInt(st.nextToken());
 			start = Integer.parseInt(st.nextToken());
 			
-			list = new LinkedList[101];
-			for (int i = 0; i <= 100; i++) {
-				list[i] = new LinkedList<>();
-			}
+			graph = new int[101][101];
 			
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < N / 2; i++) {
 				int a = Integer.parseInt(st.nextToken());
 				int b = Integer.parseInt(st.nextToken());
 				
-				list[a].add(b);
+				graph[a][b] = 1;
 			}
 			visited = new boolean[101];
 			distance = new int[101];
@@ -69,6 +67,8 @@ public class Solution {
 		}
 		
 		System.out.println(sb);
+		
+		
 	}
 	
 	static void BFS(int start) {
@@ -79,11 +79,12 @@ public class Solution {
 		
 		while(!queue.isEmpty()) {
 			int now = queue.poll();
-			for (int neigbor : list[now]) {
-				if(!visited[neigbor]) {
-					visited[neigbor]  = true;
-					distance[neigbor] = distance[now] + 1;
-					queue.add(neigbor);
+			
+			for (int i = 1; i <= graph.length - 1; i++) {
+				if(graph[now][i] == 1 && !visited[i]) {
+					visited[i] = true;
+					distance[i] = distance[now] + 1;
+					queue.add(i);
 				}
 			}
 		}
