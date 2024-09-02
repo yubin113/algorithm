@@ -31,13 +31,13 @@ public class Solution {
 
             if(swapNum > arr.length) swapNum = arr.length;
             max = Integer.MIN_VALUE;
-            DFS(0);
+            DFS(0,0);
 
             sb.append("#").append(tc).append(" ").append(max).append("\n");
         }
         System.out.println(sb);
     }
-    static void DFS(int cnt){
+    static void DFS(int cnt, int idx){
         if(cnt == swapNum) {
             int result = 0;
             for (int i = arr.length - 1, j = 0; i >= 0; i--, j++) {
@@ -47,10 +47,10 @@ public class Solution {
             return;
         }
 
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = idx; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
                 swap(i,j);
-                DFS(cnt + 1);
+                DFS(cnt + 1, i);
                 swap(i,j);
             }
         }
