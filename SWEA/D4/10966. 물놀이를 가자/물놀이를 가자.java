@@ -5,12 +5,12 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-
+ 
 public class Solution {
     static BufferedReader br;
     static StringBuilder sb;
     static StringTokenizer st;
-
+ 
     static int TC;
     static int N, M;
     static char[][] arr;
@@ -19,7 +19,7 @@ public class Solution {
     static int[] dx = {1,-1,0,0};
     static int[] dy = {0,0,1,-1};
     static int result;
-
+ 
     static class Node{
         int x, y, distance;
         Node(int x, int y, int distance){
@@ -28,11 +28,11 @@ public class Solution {
             this.distance = distance;
         }
     }
-
+ 
     public static void main(String[] args) throws IOException {
         br = new BufferedReader(new InputStreamReader(System.in));
         sb = new StringBuilder();
-
+ 
         TC = Integer.parseInt(br.readLine());
         for (int tc = 1; tc <= TC; tc++) {
             st = new StringTokenizer(br.readLine());
@@ -57,7 +57,7 @@ public class Solution {
                 }
             }
             BFS();
-
+ 
             sb.append("#").append(tc).append(" ").append(result).append("\n");
         }
         System.out.println(sb);
@@ -68,10 +68,10 @@ public class Solution {
             for (int i = 0; i < 4; i++) {
                 int nx = node.x + dx[i];
                 int ny = node.y + dy[i];
-
+ 
                 if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
                 if(visited[nx][ny]) continue;
-
+ 
                 queue.add(new Node(nx, ny, node.distance + 1));
                 visited[nx][ny] = true;
                 result += node.distance + 1;
