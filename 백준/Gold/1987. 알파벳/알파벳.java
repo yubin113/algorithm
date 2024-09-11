@@ -77,9 +77,10 @@ public class Main {
 
             //3.2.3 DFS(next Node, sum+1, arrayList)
             DFS(new Node(nextX,nextY), sum+1, arrayList);
-            
-            //원상복구
-            arrayList.remove(arrayList.size()-1);
+
+
         }
+        //원상복구
+        arrayList.remove(arrayList.size()-1);
     }
 }
