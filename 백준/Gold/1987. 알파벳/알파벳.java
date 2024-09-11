@@ -12,10 +12,10 @@ public class Main {
      *
      * 1. 인풋 케이스 받는다.(R,C int[][] arr)
      * 2. Node 클래스 만든다.
-     * 3. DFS(new Node(0,0), 0, arrayList) 실행
+     * 3. DFS(new Node(0,0), 0, arrayList) 실행 - visited
      *      3.1 result, 값과 max 비교해서 최댓값 찾는다.
      *      3.2 4방 탐색(dx, dy)한다.
-     *          3.2.1 경계 넘어가거나, 이미 포함된 알파벳이면(arrayList) continue
+     *          3.2.1 경계 넘어가거나, 방문한 곳이면 패스이미 포함된 알파벳이면(arrayList) continue
      *          3.2.2 arrayList에 다음 알파벳을 넣어준다
      *          3.2.3 DFS(next Node, sum+1, arrayList)
      *          3.2.4 원상복구해주기
@@ -38,6 +38,7 @@ public class Main {
     static int[] dy = {0,0,-1,1};
     static ArrayList<Character> arrayList;
     static int result;
+    static boolean[][] visited;
 
     public static void main(String[] args) throws IOException {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -55,6 +56,8 @@ public class Main {
         arrayList = new ArrayList<>();
         result = Integer.MIN_VALUE;
         arrayList.add(arr[0][0]);
+        visited = new boolean[R][C];
+        visited[0][0] = true;
         DFS(new Node(0,0), 1, arrayList);
         System.out.println(result);
     }
@@ -67,8 +70,9 @@ public class Main {
             int nextX = n.x + dx[i];
             int nextY = n.y + dy[i];
 
-            //3.2.1 경계 넘어가거나, 이미 포함된 알파벳이면(arrayList) continue
+            //3.2.1 경계 넘어가거나, 방문한 곳이면 패스이미 포함된 알파벳이면(arrayList) continue
             if(nextX < 0 || nextY < 0 || nextX >= R || nextY >= C) continue;
+            if(visited[nextX][nextY]) continue;
             if(arrayList.contains(arr[nextX][nextY])) continue;
 
 
@@ -76,11 +80,13 @@ public class Main {
             arrayList.add(arr[nextX][nextY]);
 
             //3.2.3 DFS(next Node, sum+1, arrayList)
+            visited[nextX][nextY] = true;
             DFS(new Node(nextX,nextY), sum+1, arrayList);
 
 
         }
         //원상복구
+        visited[n.x][n.y] = false;
         arrayList.remove(arrayList.size()-1);
     }
 }
