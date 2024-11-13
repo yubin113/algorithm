@@ -5,12 +5,9 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-
 public class Solution {
 	/**
-	 * SWEA 1249 D4 보급로
-	 * 풀이: 다익스트라
-	 * 		
+	 * 다익스트라
 	 */
 	
 	static BufferedReader br;
@@ -21,28 +18,23 @@ public class Solution {
 	static int N;
 	static int[][] arr;
 	static int[][] distance;
+	
 	static int[] dx = {-1,1,0,0};
 	static int[] dy = {0,0,-1,1};
 	
-	static int result;
-	
 	static class Node implements Comparable<Node>{
-		int x,y,time;
-
-		public Node(int x, int y, int time) {
-			super();
-			this.x = x;
-			this.y = y;
-			this.time = time;
+		int x,y,value;
+		Node(int x, int y, int value){
+			this.x =x;
+			this.y =y;
+			this.value = value;
 		}
-
 		@Override
 		public int compareTo(Node o) {
-			return this.time - o.time;
+			// TODO Auto-generated method stub
+			return this.value - o.value;
 		}
-		
 	}
-	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		br = new BufferedReader(new InputStreamReader(System.in));
 		sb = new StringBuilder();
@@ -52,7 +44,6 @@ public class Solution {
 			N = Integer.parseInt(br.readLine());
 			arr = new int[N][N];
 			distance = new int[N][N];
-			
 			for (int i = 0; i < N; i++) {
 				String tmp = br.readLine();
 				for (int j = 0; j < N; j++) {
@@ -61,43 +52,31 @@ public class Solution {
 				}
 			}
 			
-			result = Integer.MAX_VALUE;
 			BFS();
-			
 			sb.append("#").append(tc).append(" ").append(distance[N-1][N-1]).append("\n");
-		}
+			}
 		System.out.println(sb);
-	
 	}
-	
 	static void BFS() {
-		PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
-		priorityQueue.add(new Node(0,0,0));
+		PriorityQueue<Node> pq = new PriorityQueue<>();
+		pq.add(new Node(0,0,0));
 		distance[0][0] = 0;
 		
-		while(!priorityQueue.isEmpty()) {
-			Node now = priorityQueue.poll();
-			
-			//이미 현재 시간이 넘은 경우
-			if(now.time > distance[now.x][now.y]) continue;
+		while(!pq.isEmpty()) {
+			Node now = pq.poll();
 			
 			for (int i = 0; i < 4; i++) {
 				int nextX = now.x + dx[i];
 				int nextY = now.y + dy[i];
 				
-				
 				//경계
 				if(nextX < 0 || nextY < 0 || nextX >= N || nextY >= N) continue;
 				
-				//더 작은경우만
-				int nextTime = now.time + arr[nextX][nextY];
-				if(nextTime < distance[nextX][nextY]) {
-					distance[nextX][nextY] = nextTime;
-					priorityQueue.add(new Node(nextX, nextY, nextTime));
+				if(distance[nextX][nextY] > distance[now.x][now.y] + arr[nextX][nextY]) {
+					distance[nextX][nextY] = distance[now.x][now.y] + arr[nextX][nextY];
+					pq.add(new Node(nextX, nextY, now.value + arr[nextX][nextY]));
 				}
-				
 			}
 		}
-		
 	}
 }
